@@ -1,0 +1,225 @@
+/* Responsive Styles for Grace View Academy */
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+    }
+}
+
+/* Medium devices (tablets, 768px to 991px) */
+@media (max-width: 991px) {
+    h1 {
+        font-size: 2.8rem;
+    }
+    
+    h2 {
+        font-size: 2.2rem;
+    }
+    
+    .section {
+        padding: 60px 0;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .why-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .programs-cards,
+    .stats-cards,
+    .vm-cards,
+    .values-cards,
+    .approach-cards,
+    .classes-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .about-content,
+    .message-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .subjects-content,
+    .extracurricular-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px;
+    }
+    
+    .nav-menu {
+        gap: 20px;
+    }
+}
+
+/* Small devices (phones, 767px and down) */
+@media (max-width: 767px) {
+    h1 {
+        font-size: 2.3rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
+    
+    .section {
+        padding: 50px 0;
+    }
+    
+    .hero {
+        height: auto;
+        min-height: 600px;
+        margin-top: 70px;
+    }
+    
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-motto {
+        font-size: 1.2rem;
+    }
+    
+    .section-header {
+        margin-bottom: 40px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: calc(100vh - 80px);
+        background-color: rgba(255, 254, 240, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 25px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .nav-menu li a {
+        font-size: 1.2rem;
+    }
+    
+    .why-cards,
+    .programs-cards,
+    .stats-cards,
+    .vm-cards,
+    .values-cards,
+    .approach-cards,
+    .classes-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .page-header {
+        padding: 100px 0 60px;
+    }
+    
+    .page-header h1 {
+        font-size: 2.2rem;
+    }
+    
+    .card-why,
+    .card-program,
+    .card-stat,
+    .card-vm,
+    .card-value,
+    .card-approach,
+    .card-class {
+        padding: 25px 20px;
+    }
+    
+    .stats-cta {
+        padding: 30px 20px;
+    }
+    
+    .stats-cta h3 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-hero,
+    .btn-cta {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+}
+
+/* Extra small devices (phones, 480px and down) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-motto {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+    }
+    
+    .logo-text h2 {
+        font-size: 1.2rem;
+    }
+    
+    .logo-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .card-icon,
+    .program-icon,
+    .vm-icon,
+    .value-icon,
+    .approach-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        max-width: 100%;
+    }
+}

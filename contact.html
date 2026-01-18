@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Grace View Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional Contact Styles */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        
+        .contact-info-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .contact-info-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--maroon);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .contact-info-card h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--maroon);
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(128, 0, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--maroon);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .contact-text p {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .office-hours {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid var(--medium-gray);
+        }
+        
+        .office-hours h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--maroon);
+        }
+        
+        .hours-table {
+            width: 100%;
+        }
+        
+        .hours-table tr {
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .hours-table td {
+            padding: 10px 0;
+        }
+        
+        .hours-table td:first-child {
+            font-weight: 500;
+        }
+        
+        .hours-table td:last-child {
+            text-align: right;
+        }
+        
+        /* Contact Form */
+        .contact-form-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .contact-form-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--maroon);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .contact-form-card h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--maroon);
+        }
+        
+        .form-note {
+            background-color: rgba(128, 0, 0, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            border-left: 4px solid var(--maroon);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--maroon);
+            box-shadow: 0 0 0 3px rgba(128, 0, 0, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn-submit {
+            background-color: var(--maroon);
+            color: var(--white);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-submit:hover {
+            background-color: var(--maroon-light);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(128, 0, 0, 0.3);
+        }
+        
+        /* Map Section */
+        .map-section {
+            margin-bottom: 60px;
+        }
+        
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            height: 450px;
+            background-color: var(--medium-gray);
+            position: relative;
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+        }
+        
+        .map-placeholder i {
+            font-size: 4rem;
+            color: var(--maroon);
+            margin-bottom: 20px;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .map-overlay h3 {
+            margin-bottom: 10px;
+            color: var(--maroon);
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        /* Departments Contact */
+        .departments-contact {
+            margin-top: 60px;
+        }
+        
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .dept-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+        
+        .dept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .dept-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--maroon);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dept-card h4 i {
+            color: var(--maroon);
+        }
+        
+        .dept-card p {
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+        
+        @media (max-width: 991px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .dept-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .contact-info-card,
+            .contact-form-card {
+                padding: 30px 20px;
+            }
+            
+            .map-overlay {
+                position: relative;
+                top: 0;
+                left: 0;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .whatsapp-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-circle">GVA</div>
+                    <div class="logo-text">
+                        <h2>Grace View</h2>
+                        <p>Academy</p>
+                    </div>
+                </a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academic.html">Academics</a></li>
+                    <li><a href="staff.html">Our Staff</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="notice.html">Notice</a></li>
+                    <li><a href="contact.html" class="active">Contact</a></li>
+                    <li><a href="#" class="btn-apply">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Contact Grace View Academy</h1>
+            <p>Get in touch with us for inquiries, admissions, or any other information</p>
+        </div>
+    </section>
+
+    <!-- Contact Container -->
+    <section class="section contact-section">
+        <div class="container">
+            <div class="contact-container">
+                <!-- Contact Information -->
+                <div class="contact-info-card">
+                    <h2>Get In Touch</h2>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Our Location</h4>
+                                <p>123 Education Lane<br>Academic City, Greater Accra<br>Ghana</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Phone Numbers</h4>
+                                <p>Main Office: +233 24 123 4567<br>
+                                   Admissions: +233 24 987 6543<br>
+                                   Fax: +233 30 123 4567</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email Addresses</h4>
+                                <p>General Inquiries: info@graceviewacademy.edu.gh<br>
+                                   Admissions: admissions@graceviewacademy.edu.gh<br>
+                                   Headmaster: headmaster@graceviewacademy.edu.gh</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Office Hours</h4>
+                                <p>Monday - Friday: 7:30 AM - 4:30 PM<br>
+                                   Saturday: 9:00 AM - 1:00 PM (Admissions Only)<br>
+                                   Sunday: Closed</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="office-hours">
+                        <h3>Visiting Hours</h3>
+                        <table class="hours-table">
+                            <tr>
+                                <td>Monday - Thursday</td>
+                                <td>9:00 AM - 2:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Friday</td>
+                                <td>9:00 AM - 12:00 PM</td>
+                            </tr>
+                            <tr>
+                                <td>Weekends</td>
+                                <td>By Appointment Only</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top: 15px; font-size: 0.9rem;"><em>Note: All visitors must check in at the security post and obtain a visitor's pass.</em></p>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="contact-form-card">
+                    <h2>Send Us a Message</h2>
+                    <div class="form-note">
+                        <p><i class="fas fa-info-circle"></i> Please fill out the form below and we will get back to you within 24-48 hours. For urgent matters, please call our office directly.</p>
+                    </div>
+                    
+                    <form id="contactForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfYOUR_GOOGLE_FORM_ID_HERE/formResponse" method="POST" target="_blank">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name *</label>
+                                <input type="text" id="firstName" name="entry.1234567890" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name *</label>
+                                <input type="text" id="lastName" name="entry.0987654321" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="entry.4567890123" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="entry.5678901234" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="entry.6789012345" class="form-control" required>
+                                <option value="" disabled selected>Select a subject</option>
+                                <option value="Admissions">Admissions Inquiry</option>
+                                <option value="Academic">Academic Information</option>
+                                <option value="Fees">Fees & Payment</option>
+                                <option value="Employment">Employment Opportunity</option>
+                                <option value="Partnership">Partnership/Collaboration</option>
+                                <option value="Other">Other Inquiry</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message *</label>
+                            <textarea id="message" name="entry.7890123456" class="form-control" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Map Section -->
+            <div class="map-section">
+                <div class="section-header">
+                    <h2 class="section-title">Find Our Location</h2>
+                    <p class="section-subtitle">Visit our campus or get directions using the map below</p>
+                </div>
+                
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Interactive Map</h3>
+                        <p>Google Maps integration would appear here</p>
+                        <p style="margin-top: 20px; text-align: center;">
+                            <a href="https://maps.google.com/?q=123+Education+Lane,+Academic+City,+Ghana" target="_blank" class="btn-program">
+                                <i class="fas fa-directions"></i> Open in Google Maps
+                            </a>
+                        </p>
+                    </div>
+                    
+                    <div class="map-overlay">
+                        <h3><i class="fas fa-car"></i> Directions</h3>
+                        <p>From Accra Central: Take the N1 highway toward Tema. Exit at Education Interchange. Turn right onto Academic Avenue, then left onto Education Lane.</p>
+                        <p><strong>Parking:</strong> Visitor parking is available at the main entrance.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Departments Contact -->
+            <div class="departments-contact">
+                <div class="section-header">
+                    <h2 class="section-title">Contact Specific Departments</h2>
+                    <p class="section-subtitle">Reach out directly to the relevant department for faster response</p>
+                </div>
+                
+                <div class="dept-grid">
+                    <div class="dept-card">
+                        <h4><i class="fas fa-user-graduate"></i> Admissions Office</h4>
+                        <p><strong>Phone:</strong> +233 24 987 6543</p>
+                        <p><strong>Email:</strong> admissions@graceviewacademy.edu.gh</p>
+                        <p><strong>Hours:</strong> Mon-Fri, 8:00 AM - 3:00 PM</p>
+                    </div>
+                    
+                    <div class="dept-card">
+                        <h4><i class="fas fa-book"></i> Academic Office</h4>
+                        <p><strong>Phone:</strong> +233 24 234 5678</p>
+                        <p><strong>Email:</strong> academics@graceviewacademy.edu.gh</p>
+                        <p><strong>Hours:</strong> Mon-Fri, 7:30 AM - 4:00 PM</p>
+                    </div>
+                    
+                    <div class="dept-card">
+                        <h4><i class="fas fa-money-bill-wave"></i> Accounts & Fees</h4>
+                        <p><strong>Phone:</strong> +233 24 345 6789</p>
+                        <p><strong>Email:</strong> accounts@graceviewacademy.edu.gh</p>
+                        <p><strong>Hours:</strong> Mon-Fri, 8:00 AM - 3:00 PM</p>
+                    </div>
+                    
+                    <div class="dept-card">
+                        <h4><i class="fas fa-bus"></i> Transportation</h4>
+                        <p><strong>Phone:</strong> +233 24 456 7890</p>
+                        <p><strong>Email:</strong> transport@graceviewacademy.edu.gh</p>
+                        <p><strong>Hours:</strong> Mon-Fri, 6:30 AM - 5:00 PM</p>
+                    </div>
+                    
+                    <div class="dept-card">
+                        <h4><i class="fas fa-utensils"></i> Cafeteria</h4>
+                        <p><strong>Phone:</strong> +233 24 567 8901</p>
+                        <p><strong>Email:</strong> cafeteria@graceviewacademy.edu.gh</p>
+                        <p><strong>Hours:</strong> Mon-Fri, 7:00 AM - 4:00 PM</p>
+                    </div>
+                    
+                    <div class="dept-card">
+                        <h4><i class="fas fa-heartbeat"></i> Health Center</h4>
+                        <p><strong>Phone:</strong> +233 20 456 7890</p>
+                        <p><strong>Email:</strong> health@graceviewacademy.edu.gh</p>
+                        <p><strong>Hours:</strong> Mon-Fri, 7:30 AM - 4:30 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/233241234567?text=Hello%20Grace%20View%20Academy,%20I%20have%20a%20question" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">
+                        <div class="logo-circle">GVA</div>
+                        <div class="logo-text">
+                            <h2 class="fname">Grace View</h2>
+                            <p>Academy</p>
+                        </div>
+                    </a>
+                    <p class="footer-about">Grace View Academy is committed to providing quality education that develops future leaders with strong moral character and academic excellence.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="academic.html">Academics</a></li>
+                        <li><a href="staff.html">Our Staff</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Programs</h3>
+                    <ul>
+                        <li><a href="#">Nursery School</a></li>
+                        <li><a href="#">Primary School</a></li>
+                        <li><a href="#">Junior High School</a></li>
+                        <li><a href="#">Summer Programs</a></li>
+                        <li><a href="#">Extra-curricular</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Academic City</li>
+                        <li><i class="fas fa-phone"></i> +233 24 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@graceviewacademy.edu.gh</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 7:30AM - 4:30PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grace View Academy. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> for quality education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // Basic validation
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (!firstName || !lastName || !email || !message) {
+                alert('Please fill in all required fields.');
+                e.preventDefault();
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                e.preventDefault();
+                return;
+            }
+            
+            // If using Google Forms, this will submit to Google
+            // For demonstration, we'll show a success message
+            alert('Thank you for your message! We will get back to you within 24-48 hours.');
+        });
+        
+        // WhatsApp button functionality
+        document.querySelector('.whatsapp-float').addEventListener('click', function(e) {
+            // You can add analytics tracking here if needed
+            console.log('WhatsApp clicked');
+        });
+    </script>
+</body>
+</html>

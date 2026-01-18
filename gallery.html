@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Grace View Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional Gallery Styles */
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .filter-btn {
+            padding: 10px 25px;
+            background-color: var(--white);
+            border: 2px solid var(--maroon);
+            color: var(--maroon);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--maroon);
+            color: var(--white);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            cursor: pointer;
+            background-color: var(--white);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            padding: 20px;
+        }
+        
+        .gallery-caption h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--maroon);
+        }
+        
+        .gallery-caption p {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* Lightbox Styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: var(--maroon);
+        }
+        
+        /* Gallery Sections */
+        .gallery-section {
+            margin-bottom: 80px;
+        }
+        
+        .section-title-center {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--maroon);
+        }
+        
+        .video-container {
+            margin-top: 60px;
+            text-align: center;
+            background-color: var(--light-gray);
+            padding: 50px 30px;
+            border-radius: 15px;
+        }
+        
+        .video-container h3 {
+            margin-bottom: 30px;
+            color: var(--maroon);
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            background-color: var(--dark-gray);
+            border-radius: 10px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .video-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--maroon);
+        }
+        
+        /* Loading Animation for Images */
+        .gallery-img.loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Responsive Gallery */
+        @media (max-width: 767px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .gallery-img {
+                height: 200px;
+            }
+            
+            .video-placeholder {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-circle">GVA</div>
+                    <div class="logo-text">
+                        <h2>Grace View</h2>
+                        <p>Academy</p>
+                    </div>
+                </a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academic.html">Academics</a></li>
+                    <li><a href="staff.html">Our Staff</a></li>
+                    <li><a href="gallery.html" class="active">Gallery</a></li>
+                    <li><a href="notice.html">Notice</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#" class="btn-apply">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>School Gallery</h1>
+            <p>Explore our campus, classrooms, events, and student activities</p>
+        </div>
+    </section>
+
+    <!-- Gallery Filter -->
+    <section class="section gallery-filter-section">
+        <div class="container">
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">All Photos</button>
+                <button class="filter-btn" data-filter="classrooms">Classrooms</button>
+                <button class="filter-btn" data-filter="events">Events</button>
+                <button class="filter-btn" data-filter="compound">School Compound</button>
+                <button class="filter-btn" data-filter="activities">Activities</button>
+            </div>
+            
+            <!-- Classrooms Gallery -->
+            <div class="gallery-section">
+                <h2 class="section-title-center">Modern Classrooms</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="classrooms">
+                        <img src="images/classroom1.jpg" alt="Primary School Classroom" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Primary 4 Classroom</h3>
+                            <p>Modern, well-lit classroom with interactive whiteboard and individual learning stations.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="classrooms">
+                        <img src="images/classroom2.jpg" alt="Science Laboratory" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w-800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Science Laboratory</h3>
+                            <p>Fully equipped science lab for hands-on experiments and practical learning.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="classrooms">
+                        <img src="images/classroom3.jpg" alt="Nursery Classroom" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1519485478-0c78b7c1c5b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Nursery Learning Center</h3>
+                            <p>Colorful, safe environment for early childhood development with learning through play.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="classrooms">
+                        <img src="images/classroom4.jpg" alt="Computer Lab" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Computer Laboratory</h3>
+                            <p>State-of-the-art computer lab with high-speed internet and modern computers.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="classrooms">
+                        <img src="images/classroom5.jpg" alt="Library" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>School Library</h3>
+                            <p>Well-stocked library with quiet reading areas and digital learning resources.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="classrooms">
+                        <img src="images/classroom6.jpg" alt="Art Room" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Art & Creativity Room</h3>
+                            <p>Dedicated space for artistic expression with various materials and tools.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Events Gallery -->
+            <div class="gallery-section">
+                <h2 class="section-title-center">School Events</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="events">
+                        <img src="images/event1.jpg" alt="Annual Speech & Prize Giving Day" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Annual Speech & Prize Giving Day</h3>
+                            <p>Celebrating academic excellence and student achievements with parents and dignitaries.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="events">
+                        <img src="images/event2.jpg" alt="Cultural Day Celebration" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Cultural Day Celebration</h3>
+                            <p>Students showcasing diverse Ghanaian cultures through dance, music, and traditional attire.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="events">
+                        <img src="images/event3.jpg" alt="Career Day" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Career Day Exhibition</h3>
+                            <p>Professionals from various fields interacting with students about career opportunities.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="events">
+                        <img src="images/event4.jpg" alt="Graduation Ceremony" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>JHS Graduation Ceremony</h3>
+                            <p>Graduating students receiving certificates and awards for their accomplishments.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="events">
+                        <img src="images/event5.jpg" alt="Science Fair" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Annual Science Fair</h3>
+                            <p>Students presenting innovative science projects and experiments to judges and visitors.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="events">
+                        <img src="images/event6.jpg" alt="Parent-Teacher Conference" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Parent-Teacher Conference</h3>
+                            <p>Teachers and parents discussing student progress and development strategies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- School Compound Gallery -->
+            <div class="gallery-section">
+                <h2 class="section-title-center">School Compound</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="compound">
+                        <img src="images/compound1.jpg" alt="School Entrance" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Main School Entrance</h3>
+                            <p>The welcoming entrance to Grace View Academy with our school sign and logo.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="compound">
+                        <img src="images/compound2.jpg" alt="Playground" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Children's Playground</h3>
+                            <p>Safe and modern playground equipment for Nursery and Primary students.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="compound">
+                        <img src="images/compound3.jpg" alt="Sports Field" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Sports & Athletics Field</h3>
+                            <p>Well-maintained field for soccer, athletics, and other outdoor sports activities.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="compound">
+                        <img src="images/compound4.jpg" alt="Administration Block" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1560457079-9a6532ccb118?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Administration Block</h3>
+                            <p>The main administrative offices where school management and support staff work.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="compound">
+                        <img src="images/compound5.jpg" alt="School Chapel" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1511376777868-611b54f68947?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>School Chapel</h3>
+                            <p>Multi-purpose hall used for religious services, assemblies, and special events.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="compound">
+                        <img src="images/compound6.jpg" alt="School Cafeteria" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>School Cafeteria</h3>
+                            <p>Clean and spacious dining area serving nutritious meals to students and staff.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Activities Gallery -->
+            <div class="gallery-section">
+                <h2 class="section-title-center">Student Activities</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/activity1.jpg" alt="Science Experiment" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Science Club Activities</h3>
+                            <p>Students conducting experiments and exploring scientific concepts hands-on.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/activity2.jpg" alt="Sports Day" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Annual Sports Day</h3>
+                            <p>Students competing in various athletic events and team sports competitions.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/activity3.jpg" alt="Music Class" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Music & Dance Class</h3>
+                            <p>Students learning traditional Ghanaian music and dance as part of cultural education.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/activity4.jpg" alt="Art Class" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Art & Craft Session</h3>
+                            <p>Young students expressing creativity through various art forms and craft projects.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/activity5.jpg" alt="Debating Club" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Debating Society</h3>
+                            <p>Students developing public speaking and critical thinking skills through debates.</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="activities">
+                        <img src="images/activity6.jpg" alt="Community Service" class="gallery-img loading" data-src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+                        <div class="gallery-caption">
+                            <h3>Community Service Project</h3>
+                            <p>Students participating in community clean-up and social responsibility initiatives.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video Section -->
+            <div class="video-container">
+                <h3>Virtual Tour of Grace View Academy</h3>
+                <div class="video-placeholder">
+                    <i class="fas fa-play-circle"></i>
+                    <p>School Tour Video Coming Soon</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">
+                        <div class="logo-circle">GVA</div>
+                        <div class="logo-text">
+                            <h2 class="fname">Grace View</h2>
+                            <p>Academy</p>
+                        </div>
+                    </a>
+                    <p class="footer-about">Grace View Academy is committed to providing quality education that develops future leaders with strong moral character and academic excellence.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="academic.html">Academics</a></li>
+                        <li><a href="staff.html">Our Staff</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Programs</h3>
+                    <ul>
+                        <li><a href="#">Nursery School</a></li>
+                        <li><a href="#">Primary School</a></li>
+                        <li><a href="#">Junior High School</a></li>
+                        <li><a href="#">Summer Programs</a></li>
+                        <li><a href="#">Extra-curricular</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Academic City</li>
+                        <li><i class="fas fa-phone"></i> +233 24 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@graceviewacademy.edu.gh</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 7:30AM - 4:30PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grace View Academy. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> for quality education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Additional gallery functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize lazy loading for gallery images
+            const galleryImages = document.querySelectorAll('.gallery-img.loading');
+            
+            galleryImages.forEach(img => {
+                const dataSrc = img.getAttribute('data-src');
+                if (dataSrc) {
+                    const tempImg = new Image();
+                    tempImg.src = dataSrc;
+                    tempImg.onload = function() {
+                        img.src = dataSrc;
+                        img.classList.remove('loading');
+                    };
+                }
+            });
+        });
+    </script>
+</body>
+</html>

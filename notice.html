@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Notice - Grace View Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional Notice Styles */
+        .notice-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+        
+        .notice-main {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .notice-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+        
+        .notice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .notice-card.featured {
+            border-left: 5px solid var(--maroon);
+        }
+        
+        .notice-card.new {
+            position: relative;
+        }
+        
+        .notice-card.new:before {
+            content: 'NEW';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+            z-index: 1;
+        }
+        
+        .notice-header {
+            padding: 25px 30px;
+            background-color: rgba(128, 0, 0, 0.05);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .notice-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--maroon);
+        }
+        
+        .notice-meta {
+            display: flex;
+            gap: 20px;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+        
+        .notice-meta i {
+            margin-right: 5px;
+        }
+        
+        .notice-body {
+            padding: 30px;
+        }
+        
+        .notice-body p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .notice-body ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .notice-body li {
+            margin-bottom: 10px;
+        }
+        
+        .notice-cta {
+            padding: 20px 30px;
+            background-color: rgba(128, 0, 0, 0.03);
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .notice-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .sidebar-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .sidebar-title {
+            padding: 20px;
+            background-color: var(--maroon);
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .sidebar-content {
+            padding: 20px;
+        }
+        
+        .upcoming-event {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .upcoming-event:last-child {
+            border-bottom: none;
+        }
+        
+        .event-date {
+            display: inline-block;
+            background-color: rgba(128, 0, 0, 0.1);
+            color: var(--maroon);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .event-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .quick-links {
+            list-style: none;
+        }
+        
+        .quick-links li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+        
+        .quick-links li:last-child {
+            border-bottom: none;
+        }
+        
+        .quick-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+        
+        .quick-links a:hover {
+            color: var(--maroon);
+            padding-left: 5px;
+        }
+        
+        .quick-links i {
+            color: var(--maroon);
+        }
+        
+        .notice-archive {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--medium-gray);
+        }
+        
+        .archive-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--maroon);
+        }
+        
+        .archive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .archive-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+        }
+        
+        .archive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .archive-date {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+        
+        .archive-title-small {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--maroon);
+        }
+        
+        .no-notice {
+            text-align: center;
+            padding: 60px 30px;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .no-notice i {
+            font-size: 4rem;
+            color: var(--medium-gray);
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 991px) {
+            .notice-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .archive-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .notice-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .notice-cta {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <div class="logo-circle">GVA</div>
+                    <div class="logo-text">
+                        <h2>Grace View</h2>
+                        <p>Academy</p>
+                    </div>
+                </a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="academic.html">Academics</a></li>
+                    <li><a href="staff.html">Our Staff</a></li>
+                    <li><a href="gallery.html">Gallery</a></li>
+                    <li><a href="notice.html" class="active">Notice</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="#" class="btn-apply">Apply Now</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>School Notice Board</h1>
+            <p>Important announcements, news, and updates from Grace View Academy</p>
+        </div>
+    </section>
+
+    <!-- Notice Board -->
+    <section class="section notice-board">
+        <div class="container">
+            <div class="notice-container">
+                <!-- Main Notice Content -->
+                <div class="notice-main">
+                    <!-- Featured Notice -->
+                    <div class="notice-card featured new">
+                        <div class="notice-header">
+                            <h2 class="notice-title">Admission Ongoing for 2024/2025 Academic Year</h2>
+                            <div class="notice-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Posted: January 15, 2024</span>
+                                <span><i class="fas fa-user"></i> By: Administration Office</span>
+                                <span><i class="fas fa-tag"></i> Category: Admissions</span>
+                            </div>
+                        </div>
+                        <div class="notice-body">
+                            <p>Grace View Academy is pleased to announce that admissions are now open for the 2024/2025 academic year. We welcome applications for Nursery, Primary, and Junior High School programs.</p>
+                            
+                            <h3>Admission Requirements:</h3>
+                            <ul>
+                                <li>Completed application form (available at school office or downloadable from our website)</li>
+                                <li>Birth certificate or passport-sized photograph</li>
+                                <li>Previous school reports (for Primary and JHS applicants)</li>
+                                <li>Medical records and immunization card</li>
+                                <li>Two passport-sized photographs</li>
+                            </ul>
+                            
+                            <h3>Admission Process:</h3>
+                            <ol>
+                                <li>Submit completed application form with required documents</li>
+                                <li>Schedule and attend placement assessment (for Primary 2 and above)</li>
+                                <li>Attend interview with parents/guardians (if applicable)</li>
+                                <li>Receive admission decision within 7 working days</li>
+                                <li>Complete registration and fee payment</li>
+                            </ol>
+                            
+                            <p><strong>Application Deadline:</strong> March 31, 2024</p>
+                            <p><strong>School Reopening Date:</strong> September 9, 2024</p>
+                        </div>
+                        <div class="notice-cta">
+                            <a href="contact.html" class="btn-cta">Download Application Form</a>
+                            <a href="contact.html" class="btn-program">Contact Admissions Office</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Second Notice -->
+                    <div class="notice-card">
+                        <div class="notice-header">
+                            <h2 class="notice-title">School Reopening Date & Term Schedule</h2>
+                            <div class="notice-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Posted: December 20, 2023</span>
+                                <span><i class="fas fa-user"></i> By: Headmaster's Office</span>
+                                <span><i class="fas fa-tag"></i> Category: Academic Calendar</span>
+                            </div>
+                        </div>
+                        <div class="notice-body">
+                            <p>This notice serves to inform all parents, guardians, and students about the official reopening date and term schedule for the 2024/2025 academic year.</p>
+                            
+                            <h3>Term Dates:</h3>
+                            <ul>
+                                <li><strong>First Term:</strong> September 9 - December 13, 2024</li>
+                                <li><strong>Christmas Break:</strong> December 16, 2024 - January 10, 2025</li>
+                                <li><strong>Second Term:</strong> January 13 - April 4, 2025</li>
+                                <li><strong>Easter Break:</strong> April 7 - April 25, 2025</li>
+                                <li><strong>Third Term:</strong> April 28 - July 25, 2025</li>
+                            </ul>
+                            
+                            <h3>Important Dates:</h3>
+                            <ul>
+                                <li>Orientation for New Students: September 5-6, 2024</li>
+                                <li>Mid-Term Break (First Term): October 21-25, 2024</li>
+                                <li>Parent-Teacher Conference: November 15, 2024</li>
+                                <li>Christmas Carol Service: December 12, 2024</li>
+                            </ul>
+                            
+                            <p><strong>Note:</strong> All students are expected to be in full school uniform and arrive by 7:30 AM on the first day of school. School transportation will operate according to the regular schedule.</p>
+                        </div>
+                        <div class="notice-cta">
+                            <a href="#" class="btn-program">Download Full Academic Calendar</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Third Notice -->
+                    <div class="notice-card new">
+                        <div class="notice-header">
+                            <h2 class="notice-title">PTA Meeting Notice</h2>
+                            <div class="notice-meta">
+                                <span><i class="fas fa-calendar-alt"></i> Posted: January 10, 2024</span>
+                                <span><i class="fas fa-user"></i> By: PTA Secretary</span>
+                                <span><i class="fas fa-tag"></i> Category: PTA</span>
+                            </div>
+                        </div>
+                        <div class="notice-body">
+                            <p>The Parent-Teacher Association (PTA) of Grace View Academy cordially invites all parents and guardians to our first general meeting for the 2024 academic year.</p>
+                            
+                            <h3>Meeting Details:</h3>
+                            <ul>
+                                <li><strong>Date:</strong> Saturday, February 10, 2024</li>
+                                <li><strong>Time:</strong> 9:00 AM - 12:00 PM</li>
+                                <li><strong>Venue:</strong> School Assembly Hall</li>
+                            </ul>
+                            
+                            <h3>Agenda:</h3>
+                            <ol>
+                                <li>Welcome and opening prayer</li>
+                                <li>Headmaster's address and school report</li>
+                                <li>PTA Chairman's report and financial statement</li>
+                                <li>Discussion of proposed school projects for 2024</li>
+                                <li>Election of PTA Executive Committee members</li>
+                                <li>Any other business</li>
+                                <li>Closing remarks and refreshments</li>
+                            </ol>
+                            
+                            <h3>Important Notes:</h3>
+                            <ul>
+                                <li>All parents and guardians are strongly encouraged to attend</li>
+                                <li>Free childcare will be provided for young children</li>
+                                <li>Please confirm your attendance with your child's class teacher by February 5, 2024</li>
+                                <li>Masks are optional but recommended for those who prefer</li>
+                            </ul>
+                            
+                            <p>Your participation is vital for the continued success and development of our school. We look forward to seeing you there!</p>
+                        </div>
+                        <div class="notice-cta">
+                            <a href="contact.html" class="btn-program">Confirm Attendance</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notice Sidebar -->
+                <div class="notice-sidebar">
+                    <!-- Upcoming Events -->
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">
+                            <i class="fas fa-calendar-check"></i> Upcoming Events
+                        </div>
+                        <div class="sidebar-content">
+                            <div class="upcoming-event">
+                                <div class="event-date">Jan 30, 2024</div>
+                                <div class="event-title">Science Fair Exhibition</div>
+                                <p>School Assembly Hall, 10 AM - 2 PM</p>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="event-date">Feb 10, 2024</div>
+                                <div class="event-title">PTA General Meeting</div>
+                                <p>All parents and guardians invited</p>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="event-date">Feb 14, 2024</div>
+                                <div class="event-title">Valentine's Day Celebration</div>
+                                <p>Students to wear red and white</p>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="event-date">Feb 28, 2024</div>
+                                <div class="event-title">Career Day</div>
+                                <p>Various professionals visiting classes</p>
+                            </div>
+                            <div class="upcoming-event">
+                                <div class="event-date">Mar 6, 2024</div>
+                                <div class="event-title">Independence Day Celebration</div>
+                                <p>Cultural performances and parade</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Links -->
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">
+                            <i class="fas fa-link"></i> Quick Links
+                        </div>
+                        <div class="sidebar-content">
+                            <ul class="quick-links">
+                                <li><a href="academic.html"><i class="fas fa-book"></i> Academic Calendar</a></li>
+                                <li><a href="contact.html"><i class="fas fa-download"></i> Download Forms</a></li>
+                                <li><a href="#"><i class="fas fa-bus"></i> Transportation Schedule</a></li>
+                                <li><a href="#"><i class="fas fa-utensils"></i> School Meal Menu</a></li>
+                                <li><a href="#"><i class="fas fa-t-shirt"></i> Uniform Requirements</a></li>
+                                <li><a href="contact.html"><i class="fas fa-phone"></i> Contact Offices</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Emergency Contact -->
+                    <div class="sidebar-card">
+                        <div class="sidebar-title">
+                            <i class="fas fa-phone-alt"></i> Emergency Contacts
+                        </div>
+                        <div class="sidebar-content">
+                            <p><strong>School Office:</strong> +233 24 123 4567</p>
+                            <p><strong>Headmaster:</strong> +233 54 987 6543</p>
+                            <p><strong>School Nurse:</strong> +233 20 456 7890</p>
+                            <p><strong>Security:</strong> +233 27 111 2233</p>
+                            <p class="small-text"><em>For emergencies during school hours only</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notice Archive -->
+            <div class="notice-archive">
+                <h2 class="archive-title">Notice Archive</h2>
+                <div class="archive-grid">
+                    <div class="archive-card">
+                        <div class="archive-date">December 5, 2023</div>
+                        <h3 class="archive-title-small">Christmas Carol Service & End of Term</h3>
+                        <p>Information about the upcoming Christmas celebration and end of term arrangements.</p>
+                    </div>
+                    <div class="archive-card">
+                        <div class="archive-date">November 20, 2023</div>
+                        <h3 class="archive-title-small">Mid-Term Break Announcement</h3>
+                        <p>Details about the mid-term break schedule and activities.</p>
+                    </div>
+                    <div class="archive-card">
+                        <div class="archive-date">October 15, 2023</div>
+                        <h3 class="archive-title-small">Inter-House Sports Competition</h3>
+                        <p>Schedule and information about the annual inter-house sports competition.</p>
+                    </div>
+                    <div class="archive-card">
+                        <div class="archive-date">September 25, 2023</div>
+                        <h3 class="archive-title-small">Library Week Celebration</h3>
+                        <p>Activities planned for Library Week to promote reading culture.</p>
+                    </div>
+                    <div class="archive-card">
+                        <div class="archive-date">August 30, 2023</div>
+                        <h3 class="archive-title-small">New Staff Introductions</h3>
+                        <p>Welcome to our new teachers joining Grace View Academy this academic year.</p>
+                    </div>
+                    <div class="archive-card">
+                        <div class="archive-date">July 15, 2023</div>
+                        <h3 class="archive-title-small">Summer School Program</h3>
+                        <p>Information about optional summer school programs for interested students.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">
+                        <div class="logo-circle">GVA</div>
+                        <div class="logo-text">
+                            <h2 class="fname">Grace View</h2>
+                            <p>Academy</p>
+                        </div>
+                    </a>
+                    <p class="footer-about">Grace View Academy is committed to providing quality education that develops future leaders with strong moral character and academic excellence.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="academic.html">Academics</a></li>
+                        <li><a href="staff.html">Our Staff</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Programs</h3>
+                    <ul>
+                        <li><a href="#">Nursery School</a></li>
+                        <li><a href="#">Primary School</a></li>
+                        <li><a href="#">Junior High School</a></li>
+                        <li><a href="#">Summer Programs</a></li>
+                        <li><a href="#">Extra-curricular</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Lane, Academic City</li>
+                        <li><i class="fas fa-phone"></i> +233 24 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@graceviewacademy.edu.gh</li>
+                        <li><i class="fas fa-clock"></i> Mon-Fri: 7:30AM - 4:30PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Grace View Academy. All Rights Reserved. | Designed with <i class="fas fa-heart"></i> for quality education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

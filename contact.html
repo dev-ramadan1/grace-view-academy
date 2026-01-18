@@ -316,6 +316,7 @@
             color: var(--dark-gray);
         }
         
+        /* Responsive Fixes */
         @media (max-width: 991px) {
             .contact-container {
                 grid-template-columns: 1fr;
@@ -338,6 +339,26 @@
                 padding: 30px 20px;
             }
             
+            .contact-item {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .contact-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+            
+            .contact-text h4 {
+                font-size: 1.1rem;
+            }
+            
+            .contact-text p {
+                font-size: 0.95rem;
+            }
+            
             .map-overlay {
                 position: relative;
                 top: 0;
@@ -346,12 +367,62 @@
                 margin-bottom: 20px;
             }
             
+            .map-container {
+                height: 350px;
+            }
+            
             .whatsapp-float {
                 bottom: 20px;
                 right: 20px;
                 width: 50px;
                 height: 50px;
                 font-size: 1.5rem;
+            }
+            
+            .hours-table td:last-child {
+                text-align: left;
+            }
+            
+            .btn-submit {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .contact-info-card,
+            .contact-form-card {
+                padding: 25px 15px;
+            }
+            
+            .contact-info-card h2,
+            .contact-form-card h2 {
+                font-size: 1.5rem;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+            
+            .map-placeholder i {
+                font-size: 3rem;
+            }
+            
+            .dept-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .whatsapp-float {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+            
+            .form-control {
+                padding: 12px 15px;
             }
         }
     </style>
@@ -613,7 +684,7 @@
                     <a href="index.html" class="logo">
                         <div class="logo-circle">GVA</div>
                         <div class="logo-text">
-                            <h2 class="fname">Grace View</h2>
+                            <h2>Grace View</h2>
                             <p>Academy</p>
                         </div>
                     </a>
